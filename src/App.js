@@ -64,13 +64,20 @@ export default class App extends Component {
         })
     }
 
+    shareOnTwitter = () => {
+        const domain = encodeURIComponent(window.location.href);
+        const quote = encodeURIComponent(`"${this.state.quote}" ~ ${this.state.author}`);
+        const url = `https://twitter.com/intent/tweet?url=${domain}&text=${quote}`;
+        window.open(url,"_blank"); 
+    }
+
     render() {
         return(
             <Wrapper>
                 <Controls>
                     <Button src="/images/icon-refresh.svg" title="Get new quote!" action={e => this.getRandomQuote()} />
                     <Button src="/images/icon-facebook.svg" title="Share on Facebook" action={e => alert('Coming soon..')} />
-                    <Button src="/images/icon-twitter.svg" title="Share on Twitter" action={e => alert('Coming soon..')} />
+                    <Button src="/images/icon-twitter.svg" title="Share on Twitter" action={e => this.shareOnTwitter()} />
                 </Controls>
                 <WrapperContent>
                     {this.state.fetched
