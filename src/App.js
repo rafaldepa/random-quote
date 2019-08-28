@@ -64,10 +64,21 @@ export default class App extends Component {
         })
     }
 
-    shareOnTwitter = () => {
+    socialShare = (social) => {
         const domain = encodeURIComponent(window.location.href);
         const quote = encodeURIComponent(`"${this.state.quote}" ~ ${this.state.author}`);
-        const url = `https://twitter.com/intent/tweet?url=${domain}&text=${quote}`;
+        let url;
+
+        switch(social) {
+            case 'facebook':
+                url = `https://www.facebook.com/sharer/sharer.php?u=${domain}`;
+                break;
+            case 'twitter':
+                url = `https://twitter.com/intent/tweet?url=${domain}&text=${quote}`;
+                break;
+            default:
+                url = `https://twitter.com/intent/tweet?url=${domain}&text=${quote}`;
+        }
         window.open(url,"_blank"); 
     }
 
@@ -76,8 +87,8 @@ export default class App extends Component {
             <Wrapper>
                 <Controls>
                     <Button src="/images/icon-refresh.svg" title="Get new quote!" action={e => this.getRandomQuote()} />
-                    <Button src="/images/icon-facebook.svg" title="Share on Facebook" action={e => alert('Coming soon..')} />
-                    <Button src="/images/icon-twitter.svg" title="Share on Twitter" action={e => this.shareOnTwitter()} />
+                    <Button src="/images/icon-facebook.svg" title="Share on Facebook" action={e => this.socialShare('facebook')} />
+                    <Button src="/images/icon-twitter.svg" title="Share on Twitter" action={e => this.socialShare('twitter')} />
                 </Controls>
                 <WrapperContent>
                     {this.state.fetched
